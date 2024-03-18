@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">=1.7.5"
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=3.0.0"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
 }
@@ -32,4 +43,5 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   name         = module.service_principal.client_id
   value        = module.service_principal.client_secret
   key_vault_id = module.key_vault.key_vault_id
+  depends_on   = [module.key_vault]
 }

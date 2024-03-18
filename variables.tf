@@ -15,3 +15,8 @@ variable "service_principal_name" {
   description = "Name of the service principal"
   type        = string
 }
+
+variable "key_vault_name" {
+  description = "The name of the Azure Key Vault"
+  type        = string
+}

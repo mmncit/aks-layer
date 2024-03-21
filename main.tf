@@ -1,18 +1,3 @@
-terraform {
-  required_version = ">=1.7.5"
-
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">=3.0.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
 resource "azurerm_resource_group" "rg1" {
   name     = var.rgname
   location = var.location
@@ -44,4 +29,15 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   value        = module.service_principal.client_secret
   key_vault_id = module.key_vault.key_vault_id
   depends_on   = [module.key_vault]
+}
+
+module "aks" {
+  source              = "./modules/aks"
+  aks_cluster_name    = var.aks_cluster_name
+  location            = var.location
+  resource_group_name = var.rgname
+  client_id           = module.service_principal.client_id
+  client_secret       = module.service_principal.client_secret
+  ssh_key             = jsondecode(azapi_resource_action.ssh_public_key_gen.output).publicKey
+  depends_on          = [azurerm_key_vault_secret.kv_secret]
 }

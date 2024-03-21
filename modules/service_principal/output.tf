@@ -13,11 +13,6 @@ output "service_principal_tenant_id" {
   value       = azuread_service_principal.spn-sp.application_tenant_id
 }
 
-output "service_principal_application_id" {
-  description = "The client ID of the service principal"
-  value       = azuread_service_principal.spn-sp.application_id
-}
-
 output "client_id" {
   description = "The application ID of the azuread application"
   value       = azuread_application.spn.application_id

@@ -20,3 +20,8 @@ variable "key_vault_name" {
   description = "The name of the Azure Key Vault"
   type        = string
 }
+
+variable "aks_cluster_name" {
+  description = "The name of the Azure Kubernetes Service"
+  type        = string
+}
